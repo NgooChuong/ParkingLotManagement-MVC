@@ -12,21 +12,37 @@ import java.util.Date;
  * @author tuanc
  */
 public class RatingDTO {
+
+    /**
+     * @return the avatar
+     */
+    public String getAvatar() {
+        return avatar;
+    }
+
+    /**
+     * @param avatar the avatar to set
+     */
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
     private Long id;
     private Integer baidoxeId;
     private int rate;
     private Date createdDate;
     private String comments;
+    private String avatar;
 
     // Constructor, getters, and setters
     public RatingDTO() {}
 
-    public RatingDTO(Long id, Integer baidoxeId, int rate, Date createdDate, String comments) {
+    public RatingDTO(Long id, Integer baidoxeId, int rate, Date createdDate, String comments, String avatar) {
         this.id = id;
         this.baidoxeId = baidoxeId;
         this.rate = rate;
         this.createdDate = createdDate;
         this.comments = comments;
+        this.avatar = avatar;
     }
 
     // Getters and Setters

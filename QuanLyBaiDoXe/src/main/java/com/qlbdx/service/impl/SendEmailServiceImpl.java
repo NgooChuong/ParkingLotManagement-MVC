@@ -4,28 +4,10 @@
  */
 package com.qlbdx.service.impl;
 
-import com.cloudinary.Cloudinary;
-import com.cloudinary.utils.ObjectUtils;
-import com.qlbdx.pojo.Baidoxe;
-import com.qlbdx.pojo.Baidoxepic;
-import com.qlbdx.pojo.Gia;
-import com.qlbdx.repository.BaiDoXeRepository;
-import com.qlbdx.repository.ChoDoXeRepository;
-import com.qlbdx.repository.GiaRepository;
-import com.qlbdx.service.BaiDoXeService;
-import com.qlbdx.service.ChoDoXeService;
-import com.qlbdx.service.GiaService;
+
 import com.qlbdx.service.SendEmailService;
 import com.qlbdx.utils.DateUtils;
 import java.io.File;
-import java.io.IOException;
-import java.sql.Timestamp;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.activation.DataSource;
 import org.apache.commons.mail.Email;
 import org.apache.commons.mail.EmailAttachment;
 import org.apache.commons.mail.EmailException;

@@ -40,6 +40,11 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Thongtindangky.findByIsHuy", query = "SELECT t FROM Thongtindangky t WHERE t.isHuy = :isHuy")})
 public class Thongtindangky implements Serializable {
 
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "active")
+    private boolean active;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -176,6 +181,14 @@ public class Thongtindangky implements Serializable {
     @Override
     public String toString() {
         return "com.qlbdx.pojo.Thongtindangky[ id=" + id + " ]";
+    }
+
+    public boolean getActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
     
 }

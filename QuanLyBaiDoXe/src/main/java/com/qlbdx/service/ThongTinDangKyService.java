@@ -18,12 +18,14 @@ public interface ThongTinDangKyService {
 
     List<Thongtindangky> getThongTinDangKy(Map<String, String> params);
 
-    List<Object[]> getThongTinChoDaDangKy(int ChoDoId,Map<String, String> params);
+    List<Object[]> getThongTinChoDaDangKy(int ChoDoId, Map<String, String> params);
 
     void HuyDangKy(int id);
 
     void add_or_update(ThongTinDangKyDTO_v2 xe);
 
-    List<LichSuDangKyChoDoDTO> getActiveRegistrationsByUserId(Long currentUserId);
+    List<LichSuDangKyChoDoDTO> getActiveRegistrationsByUserId(Long currentUserId, Map<String, String> params);
+
+    void updateAcTive(int id);
 
 }

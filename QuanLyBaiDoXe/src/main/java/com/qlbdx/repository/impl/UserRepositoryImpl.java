@@ -128,6 +128,7 @@ public class UserRepositoryImpl implements UserRepository {
         User a = s.get(User.class, u.getId());
         System.out.println("11111111111111111");
         a.getXeSet().forEach(action -> System.out.println(action.getTenXe()));
+        
         if (!a.getXeSet().isEmpty()) {
             throw new RuntimeException("Không thể xóa vì có xe liên quan.");
         }
@@ -208,6 +209,15 @@ public class UserRepositoryImpl implements UserRepository {
         }
         s.update(u);
         return u;
+    }
+
+    @Override
+    public List<User> getStaff() {
+        Session s = this.factory.getObject().getCurrentSession();
+        Query query = s.createNamedQuery("User.findByUserRole", User.class);
+        query.setParameter("userRole", "ROLE_STAFF");
+        return query.getResultList();
+
     }
 
 }

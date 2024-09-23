@@ -198,7 +198,7 @@ public class KhuDoXeRepositoryImpl implements KhuDoXeRepository {
                 predicates.add(cb.like(phuongtienJoin.get("loai"), pt));
             }
             if (gia != null && !gia.isEmpty()) {
-                predicates.add(cb.greaterThan(giaJoin.get("gia"), Double.parseDouble(gia)));
+                predicates.add(cb.greaterThanOrEqualTo(giaJoin.get("gia"), Double.parseDouble(gia)));
             }
         }
 

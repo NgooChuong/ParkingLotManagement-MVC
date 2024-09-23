@@ -79,6 +79,7 @@ public class ApiPaypalController {
     }
 
     @PostMapping("/api/paypal/refund")
+    @CrossOrigin
     public ResponseEntity<?> refundPayment(@RequestParam String saleId,
             @RequestParam String amount){
         try{

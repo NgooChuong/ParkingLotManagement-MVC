@@ -70,8 +70,8 @@ public class Hoadon implements Serializable {
     @Size(min = 1, max = 255)
     @Column(name = "uid")
     private String uid;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "hoaDonid")
-    private Set<Userhoantien> userhoantienSet;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "hoaDonid")
+    private Userhoantien userhoantienSet;
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @OneToOne(optional = false)
     private Thongtindangky userId;
@@ -120,11 +120,11 @@ public class Hoadon implements Serializable {
     }
 
     @XmlTransient
-    public Set<Userhoantien> getUserhoantienSet() {
+    public Userhoantien getUserhoantienSet() {
         return userhoantienSet;
     }
 
-    public void setUserhoantienSet(Set<Userhoantien> userhoantienSet) {
+    public void setUserhoantienSet(Userhoantien userhoantienSet) {
         this.userhoantienSet = userhoantienSet;
     }
 

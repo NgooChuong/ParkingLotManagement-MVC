@@ -234,6 +234,7 @@ public class BaiDoXeRepositoryImpl implements BaiDoXeRepository {
     private void saveBaidoxe(Baidoxe newBaidoxe, Baidoxe b) {
         newBaidoxe.setDiachi(b.getDiachi());
         newBaidoxe.setTenBai(b.getTenBai());
+        newBaidoxe.setUserId(b.getUserId());
 
         newBaidoxe.setThoigiancua(new Timestamp(b.getThoigiancua().getTime()));
         newBaidoxe.setThoigiandongcua(new Timestamp(b.getThoigiandongcua().getTime()));
@@ -458,59 +459,67 @@ public class BaiDoXeRepositoryImpl implements BaiDoXeRepository {
 
             // Lọc theo thời gian mở cửa
             String thoigiancua = params.get("thoigiancua");
-            if (thoigiancua != null && !thoigiancua.isEmpty()) {
+            System.out.println(thoigiancua);
+            if (thoigiancua != null && !thoigiancua.trim().isEmpty()) {
                 try {
                     // Phân tích giờ và phút từ chuỗi nhập vào
                     String[] timeParts = thoigiancua.split(":");
-                    int inputHour = Integer.parseInt(timeParts[0]);
-                    int inputMinute = Integer.parseInt(timeParts[1]);
+                    if (timeParts.length == 2) { // Kiểm tra độ dài để đảm bảo chuỗi có đủ hai phần (giờ và phút)
+                        int inputHour = Integer.parseInt(timeParts[0].trim());
+                        int inputMinute = Integer.parseInt(timeParts[1].trim());
 
-                    // Lấy giờ và phút từ trường 'thoigiancua' trong cơ sở dữ liệu
-                    Expression<Integer> dbHour = b.function("hour", Integer.class, root.get("thoigiancua"));
-                    Expression<Integer> dbMinute = b.function("minute", Integer.class, root.get("thoigiancua"));
+                        // Lấy giờ và phút từ trường 'thoigiancua' trong cơ sở dữ liệu
+                        Expression<Integer> dbHour = b.function("hour", Integer.class, root.get("thoigiancua"));
+                        Expression<Integer> dbMinute = b.function("minute", Integer.class, root.get("thoigiancua"));
 
-                    // Tạo điều kiện so sánh giờ và phút
-                    Predicate hourPredicate = b.greaterThanOrEqualTo(dbHour, inputHour);
-                    Predicate minutePredicate = b.greaterThanOrEqualTo(dbMinute, inputMinute);
+                        // Tạo điều kiện so sánh giờ và phút
+                        Predicate hourPredicate = b.greaterThanOrEqualTo(dbHour, inputHour);
 
-                    // Thêm điều kiện so sánh vào danh sách
-                    predicates.add(hourPredicate);
-                    predicates.add(minutePredicate);
-
+                        // Thêm điều kiện so sánh vào danh sách
+                        predicates.add(hourPredicate);
+                    } else {
+                        System.out.println("Chuỗi thời gian không hợp lệ: " + thoigiancua);
+                    }
                 } catch (NumberFormatException ex) {
                     System.out.println("Lỗi phân tích thời gian: " + ex);
                     Logger.getLogger(BaiDoXeRepositoryImpl.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
 
-            // Lọc theo thời gian đóng cửa
+// Lọc theo thời gian đóng cửa
             String thoigiandongcua = params.get("thoigiandongcua");
-            if (thoigiandongcua != null && !thoigiandongcua.isEmpty()) {
+            System.out.println(thoigiandongcua);
+
+            if (thoigiandongcua != null && !thoigiandongcua.trim().isEmpty()) {
                 try {
                     // Phân tích giờ và phút từ chuỗi nhập vào
                     String[] timeParts = thoigiandongcua.split(":");
-                    int inputHour = Integer.parseInt(timeParts[0]);
-                    int inputMinute = Integer.parseInt(timeParts[1]);
+                    if (timeParts.length == 2) { // Kiểm tra độ dài để đảm bảo chuỗi có đủ hai phần (giờ và phút)
+                        int inputHour = Integer.parseInt(timeParts[0].trim());
+                        int inputMinute = Integer.parseInt(timeParts[1].trim());
 
-                    // Lấy giờ và phút từ trường 'thoigiandongcua' trong cơ sở dữ liệu
-                    Expression<Integer> dbHour = b.function("hour", Integer.class, root.get("thoigiandongcua"));
-                    Expression<Integer> dbMinute = b.function("minute", Integer.class, root.get("thoigiandongcua"));
+                        // Lấy giờ và phút từ trường 'thoigiandongcua' trong cơ sở dữ liệu
+                        Expression<Integer> dbHour = b.function("hour", Integer.class, root.get("thoigiandongcua"));
+                        Expression<Integer> dbMinute = b.function("minute", Integer.class, root.get("thoigiandongcua"));
 
-                    // Tạo điều kiện so sánh giờ và phút
-                    Predicate hourPredicate = b.lessThanOrEqualTo(dbHour, inputHour);
-                    Predicate minutePredicate = b.lessThanOrEqualTo(dbMinute, inputMinute);
+                        // Tạo điều kiện so sánh giờ và phút
+                        Predicate hourPredicate = b.lessThanOrEqualTo(dbHour, inputHour);
 
-                    // Thêm điều kiện so sánh vào danh sách
-                    predicates.add(hourPredicate);
-                    predicates.add(minutePredicate);
-
+                        // Thêm điều kiện so sánh vào danh sách
+                        predicates.add(hourPredicate);
+                    } else {
+                        System.out.println("Chuỗi thời gian không hợp lệ: " + thoigiandongcua);
+                    }
                 } catch (NumberFormatException ex) {
                     System.out.println("Lỗi phân tích thời gian: " + ex);
                     Logger.getLogger(BaiDoXeRepositoryImpl.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
+
             q.where(predicates.toArray(Predicate[]::new));
             String avg = params.get("avg");
+            System.out.println(avg);
+
             if (avg != null && !avg.isEmpty()) {
                 try {
                     double avgValue = Double.parseDouble(avg);
@@ -527,10 +536,10 @@ public class BaiDoXeRepositoryImpl implements BaiDoXeRepository {
         Query query = s.createQuery(q);
         if (params != null) {
             String page = params.get("page");
-            if (page == ""){
+            if (page == "") {
                 page = "1";
             }
-            
+
             System.out.println("page");
             System.out.println(page);
             System.out.println("-----------------------");

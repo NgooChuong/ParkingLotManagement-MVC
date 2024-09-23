@@ -23,6 +23,7 @@ public interface ThongTinDangKiRepository {
 
     Thongtindangky getthongTinDangKyById(long id);
 
-    List<Thongtindangky> findAllActiveRegistrations(Long currentUserId);
+    List<Thongtindangky> findAllActiveRegistrations(Long currentUserId, Map<String, String> params);
     List<Thongtindangky> findByThoiGianRaBaiBefore();
+    void updateAcTive(int id);
 }

@@ -58,7 +58,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class User implements Serializable {
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
+    @OneToMany(cascade = {CascadeType.MERGE,CascadeType.PERSIST} , mappedBy = "userId")
     private Set<Baidoxe> baidoxeSet;
 
     @Pattern(regexp = "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message = "{user.email.ValidFormMsg}")//if the field contains email address consider using this annotation to enforce field validation

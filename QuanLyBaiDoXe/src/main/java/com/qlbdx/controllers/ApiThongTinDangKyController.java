@@ -34,20 +34,33 @@ public class ApiThongTinDangKyController {
 
     @Autowired
     private ThongTinDangKyService ttdkService;
+
     // Cho Nhan vien
     @GetMapping(path = "/thongtindangky", produces = MediaType.APPLICATION_JSON_VALUE)
     @CrossOrigin
     public ResponseEntity<List<ThongTinDangKyDTO>> getbaiDoXeStaff(@RequestParam int choDoId, @RequestParam Map<String, String> params) {
-        List<Object[]> ttdk = this.ttdkService.getThongTinChoDaDangKy(choDoId,params);
+        List<Object[]> ttdk = this.ttdkService.getThongTinChoDaDangKy(choDoId, params);
         List<ThongTinDangKyDTO> ttdkdto = ListMapper.mapListObject(ttdk, ThongTinDangKyMapper::toDTO);
         return new ResponseEntity<>(ttdkdto, HttpStatus.OK);
     }
-    
+
     @PostMapping(path = "/thongtindangky/{id}")
     @CrossOrigin
-    public ResponseEntity<?> UpdateThongTinDangKy( @PathVariable(value = "id") int id) {
+    public ResponseEntity<?> UpdateThongTinDangKy(@PathVariable(value = "id") int id) {
         try {
             this.ttdkService.HuyDangKy(id);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+
+    }
+
+    @PostMapping(path = "/thongtindangkyupdate/{id}")
+    @CrossOrigin
+    public ResponseEntity<?> UpdateThongTin(@PathVariable(value = "id") int id) {
+        try {
+            this.ttdkService.updateAcTive(id);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (RuntimeException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);

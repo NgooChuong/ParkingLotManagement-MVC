@@ -38,7 +38,9 @@ public class XeServiceImpl implements XeService {
 
     private User getCurrentUser() {
 //       SecurityContextHolder.getContext().getAuthentication().getName()
-        System.out.println("username" + userRepository.getUserByUsername("admin"));
+        System.out.println("        System.out.println(SecurityContextHolder.getContext().getAuthentication().getName()):");
+
+        System.out.println(SecurityContextHolder.getContext().getAuthentication().getName());
         return userRepository.getUserByUsername(SecurityContextHolder.getContext().getAuthentication().getName()); // Tìm người dùng từ UserRepository
     }
 
@@ -58,6 +60,8 @@ public class XeServiceImpl implements XeService {
     @Override
     public List<XeDTO> getXe() {
         User currentUser = getCurrentUser();
+        System.out.println("nadiaiwdawd");
+        System.out.println(currentUser);
         List<Xe> xeList = xeRepository.getXeByIdUser(currentUser);
         return xeList.stream()
                 .map(this::convertToDTO)

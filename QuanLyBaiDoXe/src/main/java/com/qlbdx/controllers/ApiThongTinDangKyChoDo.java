@@ -10,6 +10,7 @@ import com.qlbdx.dto.ThongTinDangKyDTO_v2;
 import com.qlbdx.service.ThongTinDangKyService;
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -46,9 +47,9 @@ public class ApiThongTinDangKyChoDo {
         }
     }
     @GetMapping("/lichsudangky")
-    public ResponseEntity<List<LichSuDangKyChoDoDTO>> getActiveRegistrationsByUserId(@RequestParam("userId") Long userId) {
+    public ResponseEntity<List<LichSuDangKyChoDoDTO>> getActiveRegistrationsByUserId(@RequestParam("userId") Long userId,  @RequestParam Map<String, String> params) {
         System.out.println("d"+userId);
-        List<LichSuDangKyChoDoDTO> registrations = thongTinDangKiService.getActiveRegistrationsByUserId(userId);
+        List<LichSuDangKyChoDoDTO> registrations = thongTinDangKiService.getActiveRegistrationsByUserId(userId, params);
         System.out.println("test"+registrations);
         return ResponseEntity.ok(registrations);
     }

@@ -15,6 +15,7 @@ import com.qlbdx.formatter.KhuDoXeFormatter;
 import com.qlbdx.formatter.PhuongTienFormatter;
 import com.qlbdx.formatter.StateFormatter;
 import com.qlbdx.formatter.ThongTinDangKyFormatter;
+import com.qlbdx.formatter.UserFormatter;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -41,7 +42,7 @@ import org.springframework.web.servlet.view.JstlView;
  */
 @Configuration
 @EnableWebMvc
-//@EnableScheduling
+@EnableScheduling
 @EnableTransactionManagement
 @ComponentScan(basePackages = {
     "com.qlbdx.controllers",
@@ -95,6 +96,7 @@ public class WebAppContextConfigs implements WebMvcConfigurer {
         registry.addFormatter(new ChoDoFormatter());
         registry.addFormatter(new KhuDoXeFormatter());
         registry.addFormatter(new ThongTinDangKyFormatter());
+        registry.addFormatter(new UserFormatter());
 
     }
 

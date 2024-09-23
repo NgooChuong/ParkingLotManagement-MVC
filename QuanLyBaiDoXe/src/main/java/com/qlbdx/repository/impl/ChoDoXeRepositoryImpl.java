@@ -195,13 +195,16 @@ public class ChoDoXeRepositoryImpl implements ChoDoXeRepository {
 //            session.flush();
 //            session.clear();
         //       } 
-        String hql = "UPDATE Chodo SET khuDoXeid.id = :newDetailId "
-                + "WHERE id IN (SELECT c.id FROM Chodo c WHERE c.khuDoXeid.id = :oldDetailId AND c.baiDoXeid.id = :baiDoXeId)";
+        String hql = "UPDATE Chodo SET khuDoXeid.id = :newDetailId WHERE khuDoXeid.id = :oldDetailId AND baiDoXeid.id = :baiDoXeId";
 
+        System.out.println(newId);
+        System.out.println(oldDetailId);
+        System.out.println(baiDoXeId);
         Query query = session.createQuery(hql);
         query.setParameter("newDetailId", newId);
         query.setParameter("oldDetailId", oldDetailId);
         query.setParameter("baiDoXeId", baiDoXeId);
+
         try {
             int updatedEntities = query.executeUpdate();
             session.flush();
@@ -303,6 +306,8 @@ public class ChoDoXeRepositoryImpl implements ChoDoXeRepository {
         String baiDoXeId = params.get("baiDoXe_id");
         String khuDoXeId = params.get("khuDoXe_id");
         String phuongtien = params.get("phuongtien");
+        System.out.println("adapjdajndwoiaoiwndawd");
+        System.out.println(startTime);
         if (startTime != "" && endTime != "") {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
             LocalDateTime startDateTime = LocalDateTime.parse(startTime, formatter);

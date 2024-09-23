@@ -19,14 +19,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -85,7 +79,8 @@ public class ThongBaoTuDongServiceImpl implements ThongBaoThoiGianDoTuDong {
             Date raBaiTime = registration.getThoiGianRaBai();
 
             // Chỉ gửi email nếu chưa gửi thông báo cho xe này hoặc nếu thời gian thông báo đã hết hạn
-            if (!notifiedVehicles.containsKey(vehicleId) || notifiedVehicles.get(vehicleId).before(raBaiTime)) {
+            // dieu kien 2: Kiễm tra 
+            if (!notifiedVehicles.containsKey(vehicleId)) {
                 String userEmail = registration.getXeId().getUserId().getEmail();
                 String subject = "Thông báo về thời gian ra bãi đã hết hạn";
                 String text = String.format(

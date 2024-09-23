@@ -26,7 +26,8 @@ public class UserMapper {
                 user.getFirstName(),
                 user.getLastName(),
                 user.getPhone(),
-                user.getAvatar()
+                user.getAvatar(),
+                user.getUserRole()
         );
     }
 

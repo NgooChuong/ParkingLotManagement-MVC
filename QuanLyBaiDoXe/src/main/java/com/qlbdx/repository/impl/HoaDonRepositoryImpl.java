@@ -139,7 +139,7 @@ public class HoaDonRepositoryImpl implements HoaDonRepository {
         Hoadon hoadon = s.get(Hoadon.class, Long.valueOf(id));
 
         if (hoadon != null) {
-            if (!hoadon.getUserhoantienSet().isEmpty()) {
+            if (hoadon.getUserhoantienSet().getId() !=null) {
                 throw new RuntimeException("Không thể xóa vì có hoàn tiền liên quan.");
             }
             if (hoadon.getUserId().getId() != null) {

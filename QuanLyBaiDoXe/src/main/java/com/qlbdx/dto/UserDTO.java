@@ -13,6 +13,20 @@ import java.util.Date;
  */
 public class UserDTO {
 
+    /**
+     * @return the role
+     */
+    public String getRole() {
+        return role;
+    }
+
+    /**
+     * @param role the role to set
+     */
+    public void setRole(String role) {
+        this.role = role;
+    }
+
     private Long id;
     private String email;
     private String username;
@@ -20,8 +34,10 @@ public class UserDTO {
     private String lastName;
     private String phone;
     private String avatar;
+    private String role;
 
-    public UserDTO(Long id,String email, String username, String firstName, String lastName, String phone, String avatar) {
+    public UserDTO(Long id, String email, String username, String firstName,
+            String lastName, String phone, String avatar, String role) {
         this.id = id;
         this.email = email;
         this.username = username;
@@ -29,6 +45,7 @@ public class UserDTO {
         this.lastName = lastName;
         this.phone = phone;
         this.avatar = avatar;
+        this.role = role;
     }
 
     /**

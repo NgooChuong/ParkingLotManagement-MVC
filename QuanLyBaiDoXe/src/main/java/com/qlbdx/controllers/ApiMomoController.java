@@ -31,6 +31,8 @@ public class ApiMomoController {
     public ResponseEntity<?> createPayment(
             @RequestParam("amount") String amount) {
         try {
+            System.out.println("amount");
+            System.out.println(amount);
             return ResponseEntity.ok(momoService.createPaymentRequest(amount));
         } catch (Exception e) {
             return ResponseEntity.status(500).body("Error: " + e.getMessage());

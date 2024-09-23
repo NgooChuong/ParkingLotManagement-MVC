@@ -183,7 +183,7 @@ public class UserServiceImpl implements UserService {
         s.setUsername(u.getUsername());
         s.setPassword(this.passEncoder.encode("123456"));
         s.setActive(true);
-        s.setAvatar("https://lh3.googleusercontent.com/a/ACg8ocLx4rU-d7-2UVY9JGYergqilaJFTbWA5w5ZrGhBK31r5QZv=s96-c");
+        s.setAvatar(u.getAvatar());
         s.setDateJoined(new Date());
         long randomNumber = 1000000000L + (long) (random.nextDouble() * 9000000000L);
         System.out.println(String.valueOf(randomNumber));
@@ -193,6 +193,11 @@ public class UserServiceImpl implements UserService {
         s.setFirstName("");
         s.setLastName("");
         return this.userRepo.addUser(s);
+    }
+
+    @Override
+    public List<User> getStaff() {
+        return this.userRepo.getStaff();
     }
 
 }

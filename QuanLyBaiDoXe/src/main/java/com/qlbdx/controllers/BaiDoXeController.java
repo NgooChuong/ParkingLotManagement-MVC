@@ -20,6 +20,7 @@ import com.qlbdx.service.GiaService;
 import com.qlbdx.service.KhuDoXeService;
 import com.qlbdx.service.PhuongTienService;
 import com.qlbdx.service.PictureBaiDoXeService;
+import com.qlbdx.service.UserService;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -69,6 +70,9 @@ public class BaiDoXeController {
     private ChiTietKhuDoXeService chitietKhuSer;
     @Autowired
     private PhuongTienService ptSer;
+    
+    @Autowired
+    private UserService USer;
 
     @Autowired
 //    private PictureBaiDoXeService picSer;
@@ -81,6 +85,8 @@ public class BaiDoXeController {
         model.addAttribute("phuongtien", this.ptSer.getPhuongTien());
         model.addAttribute("khudoXe", this.khuSer.getKhuDoXe(null));
         model.addAttribute("chiTietKhuDoXe", this.chitietKhuSer.getChiTietKhuDoXe(null));
+        model.addAttribute("staff", this.USer.getStaff());
+
 
 //        model.addAttribute("picBaiXe", this.picSer.getPic());
     }
@@ -88,6 +94,7 @@ public class BaiDoXeController {
     @GetMapping("/baiDo")
     public String baiDoView(Model model) {
         model.addAttribute("baiDoXe", new Baidoxe());
+
         return "baido";
     }
 
@@ -95,11 +102,12 @@ public class BaiDoXeController {
     public String createBaiDoView(Model model,
             @ModelAttribute(value = "baiDoXe") @Valid Baidoxe p, @RequestParam("files") MultipartFile[] files,
             BindingResult rs) {
-        System.out.println("vo dat" + rs);
+        System.out.println("vo dat");
         if (rs.hasErrors()) {
             System.out.println("vo nay" + rs.getAllErrors());
             return "baido";
         }
+        
         System.out.println("dada" + p.getThoigiandongcua().before(p.getThoigiancua()));
         if (p.getThoigiandongcua().before(p.getThoigiancua())) {
             model.addAttribute("timeError", "Thời gian đóng cửa không được trước thời gian mở cửa.");
@@ -111,6 +119,10 @@ public class BaiDoXeController {
             model.addAttribute("timeError", "Vui lòng chọn ít nhất một ảnh.");
             return "baido"; // Quay lại trang nếu không có ảnh
         }
+                System.out.println("dawdawdawd");
+                                System.out.println(p.getUserId());
+
+
         try {
             System.out.println(p.getThoigiancua() + "\n" + p.getThoigiandongcua());
             for (MultipartFile file : files) {
@@ -132,7 +144,7 @@ public class BaiDoXeController {
             Set<Baidoxepic> epicSet = new HashSet<>(epicMap.values());
             p.setBaidoxepicSet(epicSet);
             this.baiSer.addBaiDoXe(p);
-            return "redirect:/baiDo";
+            return "redirect:/baido";
         } catch (Exception ex) {
             System.out.println("loi h");
             model.addAttribute("timeError", ex.getMessage());

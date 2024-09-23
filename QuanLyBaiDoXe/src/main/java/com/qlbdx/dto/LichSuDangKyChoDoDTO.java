@@ -4,15 +4,56 @@
  */
 package com.qlbdx.dto;
 
-import java.util.Date;
-
 /**
  *
  * @author tuanc
  */
 public class LichSuDangKyChoDoDTO {
-     private String thoiGianVoBai;
-     private Long id;
+
+    /**
+     * @return the diaChi
+     */
+    public String getDiaChi() {
+        return diaChi;
+    }
+
+    /**
+     * @param diaChi the diaChi to set
+     */
+    public void setDiaChi(String diaChi) {
+        this.diaChi = diaChi;
+    }
+
+    /**
+     * @return the gia
+     */
+    public Double getGia() {
+        return gia;
+    }
+
+    /**
+     * @param gia the gia to set
+     */
+    public void setGia(Double gia) {
+        this.gia = gia;
+    }
+
+    /**
+     * @return the active
+     */
+    public boolean isActive() {
+        return active;
+    }
+
+    /**
+     * @param active the active to set
+     */
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    private String thoiGianVoBai;
+    private Long id;
     private String thoiGianRaBai;
     private String tenXe;
     private String tenBaiXe;
@@ -22,8 +63,12 @@ public class LichSuDangKyChoDoDTO {
     private Long id_chodo;
     private Integer id_Bai;
     private Integer id_khu;
-
+    private boolean active;
     private boolean isHuy;
+    private Double gia;
+    private String diaChi;
+    
+
     /**
      * @return the thoiGianVoBai
      */

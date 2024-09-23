@@ -19,11 +19,15 @@ public class ThongTinDangKyDTO {
     private String bienSo;
     private String image;
     private String username;
+    private Long id_hd;
+    private Double soTien;
+    private String ngayCapNhat;
+    private Long id_ht;
 
     public ThongTinDangKyDTO(Long id, boolean isHuy, String thoiGianRaBai, String thoiGianVoBai, String thoiGianDangKy,
-            String tenXe, String bienSo, String image, String username) {
-        this.id =id;
-        this.isHuy=isHuy;
+            String tenXe, String bienSo, String image, String username, Long id_hd, Double soTien, String ngayCapNhat, Long id_ht) {
+        this.id = id;
+        this.isHuy = isHuy;
         this.thoiGianRaBai = thoiGianRaBai;
         this.thoiGianVoBai = thoiGianVoBai;
         this.thoiGianDangKy = thoiGianDangKy;
@@ -31,6 +35,10 @@ public class ThongTinDangKyDTO {
         this.bienSo = bienSo;
         this.image = image;
         this.username = username;
+        this.id_hd = id_hd;
+        this.soTien = soTien;
+        this.ngayCapNhat = ngayCapNhat;
+        this.id_ht = id_ht;
     }
 
     /**
@@ -157,6 +165,62 @@ public class ThongTinDangKyDTO {
      */
     public void setIsHuy(boolean isHuy) {
         this.isHuy = isHuy;
+    }
+
+    /**
+     * @return the id_hd
+     */
+    public Long getId_hd() {
+        return id_hd;
+    }
+
+    /**
+     * @param id_hd the id_hd to set
+     */
+    public void setId_hd(Long id_hd) {
+        this.id_hd = id_hd;
+    }
+
+    /**
+     * @return the soTien
+     */
+    public Double getSoTien() {
+        return soTien;
+    }
+
+    /**
+     * @param soTien the soTien to set
+     */
+    public void setSoTien(Double soTien) {
+        this.soTien = soTien;
+    }
+
+    /**
+     * @return the ngayCapNhat
+     */
+    public String getNgayCapNhat() {
+        return ngayCapNhat;
+    }
+
+    /**
+     * @param ngayCapNhat the ngayCapNhat to set
+     */
+    public void setNgayCapNhat(String ngayCapNhat) {
+        this.ngayCapNhat = ngayCapNhat;
+    }
+
+    /**
+     * @return the id_ht
+     */
+    public Long getId_ht() {
+        return id_ht;
+    }
+
+    /**
+     * @param id_ht the id_ht to set
+     */
+    public void setId_ht(Long id_ht) {
+        this.id_ht = id_ht;
     }
 
 }

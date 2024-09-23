@@ -23,7 +23,11 @@ public class ThongTinDangKyMapper {
                 (String) obj[5], // tenXe
                 (String) obj[6], // bienSo
                 (String) obj[7], // image
-                (String) obj[8] // username
+                (String) obj[8], // username
+                (Long) obj[9],
+                (Double) obj[10],
+                DateMapper.formatter.format((Timestamp) obj[11]),
+                (Long) obj[12]
         );
     }
 }

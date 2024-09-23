@@ -36,14 +36,6 @@ public class ApiHoaDonController {
     @GetMapping(path = "/Hoadon/{ttdk_id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @CrossOrigin
     public ResponseEntity<HoaDonDTO> getHoadonByTTDK(@PathVariable(value = "ttdk_id") int id) {
-//        this.khudoService.getKhuDoXeByBaiDoXeId(baidoxeid).forEach(obj -> {
-//            System.out.println(obj[0]);
-//            System.out.println(obj[1]);
-//            System.out.println(obj[2]);
-//            System.out.println(obj[3].getClass().getName());
-//            System.out.println(obj[4]);
-//
-//        });
         HoaDonDTO hddto = HoadonMapper.toDTO(this.hoadonService.getHoaDonByThongTinDangKyId(id)) ;
         return new ResponseEntity<>(hddto, HttpStatus.OK);
     }

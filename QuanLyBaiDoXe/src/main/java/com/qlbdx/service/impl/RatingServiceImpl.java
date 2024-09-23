@@ -48,8 +48,8 @@ public class RatingServiceImpl implements RatingService {
 
     private User getCurrentUser() {
 //       SecurityContextHolder.getContext().getAuthentication().getName()
-        System.out.println("username" + userRepository.getUserByUsername("admin"));
-        return userRepository.getUserByUsername("admin"); // Tìm người dùng từ UserRepository
+//        System.out.println("username" + userRepository.getUserByUsername("admin"));
+        return userRepository.getUserByUsername(  SecurityContextHolder.getContext().getAuthentication().getName()); // Tìm người dùng từ UserRepository
     }
 
     private RatingDTO convertToDTO(Rating rating) {
@@ -59,6 +59,7 @@ public class RatingServiceImpl implements RatingService {
         // Lấy thông tin từ các trường của Rating
         dto.setBaidoxeId(rating.getBaiDoid().getId()); // Giả sử đây là cách lấy ID của Baidoxe
         dto.setRate(rating.getRate());
+        dto.setAvatar(rating.getUserId().getAvatar());
 
         if (rating.getCreatedDate() != null) {
             dto.setCreatedDate(rating.getCreatedDate());

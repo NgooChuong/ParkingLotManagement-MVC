@@ -34,4 +34,6 @@ public interface UserService extends UserDetailsService {
 
     User updateUser(Map<String, String> params, MultipartFile avatar);
 
+    List<User> getStaff();
+
 }

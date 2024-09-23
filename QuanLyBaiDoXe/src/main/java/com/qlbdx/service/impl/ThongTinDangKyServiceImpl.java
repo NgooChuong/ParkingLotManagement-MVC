@@ -42,7 +42,7 @@ public class ThongTinDangKyServiceImpl implements ThongTinDangKyService {
 
     @Autowired
     private XeRepository xeRepository;
-    
+
     @Autowired
     private ThongBaoThoiGianDoTuDong tbtdSer;
 
@@ -83,7 +83,6 @@ public class ThongTinDangKyServiceImpl implements ThongTinDangKyService {
             System.out.println("d" + dto.getThoiGianVoBai());
         }
         dto.setIsHuy(registration.getIsHuy());
-
         dto.setThoiGianRaBai(DateMapper.formatter.format(registration.getThoiGianRaBai()));
         dto.setTenXe(registration.getXeId().getTenXe());
         dto.setVitri(registration.getChoDoid().getVitri());
@@ -91,16 +90,23 @@ public class ThongTinDangKyServiceImpl implements ThongTinDangKyService {
         dto.setId_chodo(registration.getChoDoid().getId());
         dto.setId_Bai(registration.getChoDoid().getBaiDoXeid().getId());
         dto.setId_khu(registration.getChoDoid().getKhuDoXeid().getId());
-
+        dto.setActive(registration.getActive());
         dto.setTenBaiXe(registration.getChoDoid().getBaiDoXeid().getTenBai());
         dto.setKhuDoXe(registration.getChoDoid().getKhuDoXeid().getKhuDoId().getTenDay());
+        dto.setGia(registration.getHoadon().getSoTien());
+        dto.setDiaChi(registration.getChoDoid().getBaiDoXeid().getDiachi());
+
         return dto;
     }
 
     @Override
-    public List<LichSuDangKyChoDoDTO> getActiveRegistrationsByUserId(Long currentUserId) {
-
-        List<Thongtindangky> registrations = TTDKRep.findAllActiveRegistrations(currentUserId);
+    public List<LichSuDangKyChoDoDTO> getActiveRegistrationsByUserId(Long currentUserId, Map<String, String> params) {
+        List<Thongtindangky> registrations = TTDKRep.findAllActiveRegistrations(currentUserId, params);
         return registrations.stream().map(this::convertToDTO).collect(Collectors.toList());
+    }
+
+    @Override
+    public void updateAcTive(int id) {
+        this.TTDKRep.updateAcTive(id);
     }
 }

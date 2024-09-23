@@ -17,6 +17,13 @@ import java.util.Date;
 public class ThongTinDangKyDTO_v2 {
 
     /**
+     * @param soTien the soTien to set
+     */
+    public void setSoTien(Integer soTien) {
+        this.soTien = soTien;
+    }
+
+    /**
      * @return the thoiGianDangKy
      */
     public Date getThoiGianDangKy() {
@@ -40,7 +47,7 @@ public class ThongTinDangKyDTO_v2 {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private Date thoiGianDangKy;
     private Long choDoId;
-    private double soTien;
+    private Integer soTien;
     private String uid;
     private boolean isHuy;
     // Chuyển đổi dấu thời gian thành đối tượng Date
@@ -116,7 +123,7 @@ public class ThongTinDangKyDTO_v2 {
     /**
      * @return the soTien
      */
-    public double getSoTien() {
+    public Integer getSoTien() {
         return soTien;
     }
 

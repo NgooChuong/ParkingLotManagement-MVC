@@ -62,6 +62,7 @@ public class ApiKhuDoController {
     @CrossOrigin
     public ResponseEntity<List<KhuDoXeDTO>> getKhuDoXeByBaiDoXeId(@RequestParam int baidoxeid, @RequestParam Map<String, String> params) {
         List<KhuDoXeDTO> kdx = new ArrayList<>();
+        
         this.khudoService.getKhuDoXeByBaiDoXeId(baidoxeid, params).forEach(obj -> {
             kdx.add(
                     new KhuDoXeDTO(
@@ -98,8 +99,8 @@ public class ApiKhuDoController {
                     new KhuDoXeDTO(
                             ((Number) obj[0]).longValue(), // ID khu vực, chuyển đổi từ Integer/Long sang Long
                             ((Number) obj[1]).longValue(), // ID bãi đỗ xe, chuyển đổi từ Integer/Long sang Long
-                            (String) obj[2], //
-                            (Double) obj[3], // Giá trị, ép kiểu từ Object sang Double
+                            (String) obj[2], 
+                            (Double) obj[3],
                             (String) obj[4],
                              cds.size(),
                             ListMapper.mapListObject(cds, ChoDoMapper::toDTO),

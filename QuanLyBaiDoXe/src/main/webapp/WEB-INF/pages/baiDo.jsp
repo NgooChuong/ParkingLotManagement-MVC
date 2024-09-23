@@ -36,7 +36,15 @@
         <input type="file" id="files" name="files" multiple="multiple" />
         <form:errors path="files" element="div" cssClass="alert alert-danger" />
     </div>
+    <div class="mb-3 mt-3">
+        <label for="baiDoXeid" class="form-label">Chọn Nhân viên cho bãi</label>
+        <form:select path="userId" id="userId" class="form-select">
+            <c:forEach items="${staff}" var="s">
+                <option value="${s.id}">${s.username}</option>
 
+            </c:forEach>
+        </form:select>
+    </div>
     <div class="mb-3 mt-3">
         <form:hidden path="id" />
         <form:hidden path="files" />

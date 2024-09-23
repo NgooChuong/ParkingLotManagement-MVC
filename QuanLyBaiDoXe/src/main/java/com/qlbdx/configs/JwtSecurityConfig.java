@@ -64,16 +64,18 @@ public class JwtSecurityConfig extends WebSecurityConfigurerAdapter {
         System.out.println("22222222222222222222222222222222222");
         http.csrf().ignoringAntMatchers("/api/**");
         http.authorizeRequests().antMatchers("/api/login/**").permitAll();
-                http.authorizeRequests().antMatchers("/api/loginGG/**").permitAll();
+        http.authorizeRequests().antMatchers("/api/loginGG/**").permitAll();
         http.authorizeRequests().antMatchers("/api/users/**").permitAll();
-        http.authorizeRequests().antMatchers(HttpMethod.GET, "/api/**/comments/").permitAll();
+        http.authorizeRequests().antMatchers(HttpMethod.POST, "/api/rating/baidoxe").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')");
         http.authorizeRequests().antMatchers(HttpMethod.DELETE, "/api/**").permitAll();
-//        http.authorizeRequests().antMatchers(HttpMethod.GET, "/api/staffBaiDoXe").hasRole("STAFF");
         http.antMatcher("/api/**").httpBasic().authenticationEntryPoint(restServicesEntryPoint()).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
                 .antMatchers(HttpMethod.GET, "/api/**").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER') or hasRole('ROLE_STAFF')")
                 .antMatchers(HttpMethod.POST, "/api/**").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER') or hasRole('ROLE_STAFF')").and()
-                //                .antMatchers(HttpMethod.DELETE, "/api/**").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')").and()
+//                .antMatchers("/api/paypal/refund").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_STAFF')")
+//                .antMatchers("/api/userHoanTien").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_STAFF')")
+
+//                .antMatchers(HttpMethod.DELETE, "/api/**").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')").and()
                 .addFilterBefore(jwtAuthenticationTokenFilter(), UsernamePasswordAuthenticationFilter.class)
                 .exceptionHandling().accessDeniedHandler(customAccessDeniedHandler());
 

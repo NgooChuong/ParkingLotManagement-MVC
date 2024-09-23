@@ -30,5 +30,7 @@ public interface UserRepository {
     User addUser(User u);
 
     User updateUser(User u);
+    
+    List<User> getStaff();
 
 }

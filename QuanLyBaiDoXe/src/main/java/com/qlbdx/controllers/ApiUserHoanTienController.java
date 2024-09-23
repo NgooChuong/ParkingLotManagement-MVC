@@ -30,11 +30,10 @@ public class ApiUserHoanTienController {
 
     @Autowired
     private HoanTienService hoantienService;
-
+    
     @PostMapping(path = "/userHoanTien",
             consumes = {MediaType.MULTIPART_FORM_DATA_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE})
-    @CrossOrigin
     public ResponseEntity<?> addUserHoanTIen(
             @RequestParam("hdid") int hdid,
             @RequestParam("uid") int uid) {

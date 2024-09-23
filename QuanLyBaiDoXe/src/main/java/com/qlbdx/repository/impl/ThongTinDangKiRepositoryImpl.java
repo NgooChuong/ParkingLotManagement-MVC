@@ -11,6 +11,7 @@ import com.qlbdx.pojo.Hoadon;
 import com.qlbdx.pojo.Khudoxe;
 import com.qlbdx.pojo.Thongtindangky;
 import com.qlbdx.pojo.User;
+import com.qlbdx.pojo.Userhoantien;
 import com.qlbdx.pojo.Xe;
 import com.qlbdx.repository.ChoDoXeRepository;
 import com.qlbdx.repository.HoaDonRepository;
@@ -31,6 +32,7 @@ import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Join;
+import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import org.hibernate.LockMode;
@@ -125,6 +127,8 @@ public class ThongTinDangKiRepositoryImpl implements ThongTinDangKiRepository {
         // Join với các bảng liên quan
         Join<Thongtindangky, Xe> xeJoin = ttdkRoot.join("xeId");
         Join<Xe, User> userJoin = xeJoin.join("userId");
+        Join<Thongtindangky, Hoadon> hoaDonJoin = ttdkRoot.join("hoadon"); // Join bảng HoaDon
+        Join<Hoadon, Userhoantien> userHoanTienJoin = hoaDonJoin.join("userhoantienSet", JoinType.LEFT); // Left join bảng Userhoantien
 
         // Lựa chọn các cột cần lấy
         cq.multiselect(
@@ -136,7 +140,12 @@ public class ThongTinDangKiRepositoryImpl implements ThongTinDangKiRepository {
                 xeJoin.get("tenXe"),
                 xeJoin.get("bienSo"),
                 xeJoin.get("image"),
-                userJoin.get("username")
+                userJoin.get("username"),
+                hoaDonJoin.get("id"), // Lấy thêm cột từ bảng HoaDon
+                hoaDonJoin.get("soTien"),
+                hoaDonJoin.get("ngayCapNhat"),
+                userHoanTienJoin.get("id") // Lấy thêm cột từ bảng Userhoantien
+                
         );
 
         // Tạo danh sách các điều kiện
@@ -257,6 +266,8 @@ public class ThongTinDangKiRepositoryImpl implements ThongTinDangKiRepository {
             ttdk.setIsHuy(false);
             ttdk.setThoiGianRaBai(dk.getThoiGianRaBai());
             ttdk.setThoiGianVoBai(dk.getThoiGianVoBai());
+             Xe xe2 = xeRepository.getXeById(dk.getXeId());
+            ttdk.setXeId(xe2);
             if (dk.getHoadonId() != null) {
                 Hoadon hoadon = hoadonRepository.getHoaDonById(Math.toIntExact(dk.getHoadonId()));
                 if (hoadon != null) {
@@ -299,27 +310,30 @@ public class ThongTinDangKiRepositoryImpl implements ThongTinDangKiRepository {
     }
 
     @Override
-    public List<Thongtindangky> findAllActiveRegistrations(Long currentUserId) {
+    public List<Thongtindangky> findAllActiveRegistrations(Long currentUserId, Map<String, String> params) {
         Session s = factory.getObject().getCurrentSession();
-        // Tạo đối tượng CriteriaBuilder từ EntityManager
         CriteriaBuilder criteriaBuilder = s.getCriteriaBuilder();
-
-        // Tạo đối tượng CriteriaQuery cho Thongtindangky
         CriteriaQuery<Thongtindangky> dk = criteriaBuilder.createQuery(Thongtindangky.class);
-
-        // Xác định nguồn dữ liệu cho truy vấn (từ bảng Thongtindangky)
         Root<Thongtindangky> root = dk.from(Thongtindangky.class);
-
-        // Tạo điều kiện truy vấn (WHERE t.active = true)
-        Predicate timePredicate = criteriaBuilder.greaterThan(root.get("thoiGianVoBai"), new Date());
         Predicate userPredicate = criteriaBuilder.equal(root.get("xeId").get("userId"), currentUserId);
-
-        // Kết hợp các điều kiện
-        dk.where(criteriaBuilder.and(userPredicate, timePredicate));
-
+        dk.where(userPredicate);
         // Tạo và thực thi truy vấn
-        Query query = s.createQuery(dk); // Trả về danh sách kết quả
-        return query.getResultList();
+        Query query = s.createQuery(dk);
+        String page = params.get("page");
+        if (page != null && !page.isEmpty()) {
+            int p = Integer.parseInt(page);
+            int start = (p - 1) * PAGE_SIZE;
+            query.setFirstResult(start);
+            query.setMaxResults(PAGE_SIZE);
+        }
 
+        return query.getResultList();
+    }
+
+    public void updateAcTive(int id) {
+        Session session = this.factory.getObject().getCurrentSession();
+        Thongtindangky ttdk = session.get(Thongtindangky.class, Long.valueOf(id));
+        ttdk.setActive(true);
+        session.update(ttdk);
     }
 }
